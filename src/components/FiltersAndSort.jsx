@@ -46,6 +46,22 @@ const FilterAndSorts = ({onNameChange, nameFilterValue,starRatingFilter,setStarR
                              </Grid>
                          </Grid>
                             }
+                            {pricingOptions.length >0 && pricingOptions.map((option, index)=>{
+                                return (
+                                    <Grid container direction='row' display='flex' alignItems='center' spacing={1}>
+                                    <Grid item>
+                                        <Typography component="div" variant='body1'>
+                                                {index === 0 ? 'Minimum Price:' : 'Maximum Price'}
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item>
+                                        <Typography component="div" variant='subtitle1'>
+                                                SGD {option}
+                                        </Typography>
+                                    </Grid>
+                                </Grid>
+                                )
+                            })}
                             {guestRatingValue && 
                              <Grid container direction='row' display='flex' alignItems='center' spacing={1}>
                                 <Grid item>

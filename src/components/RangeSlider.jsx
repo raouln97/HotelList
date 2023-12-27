@@ -30,7 +30,7 @@ const RangeSlider = ({onPriceFilterChange, options, priceFilterLimit}) => {
         value={value}
         onChange={handleChange}
         valueLabelDisplay="auto"
-        min={0}
+        min={priceFilterLimit[0]}
         max={priceFilterLimit[1]}
         sx={{ 
           marginTop: 2, 

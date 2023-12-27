@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, Card, CardContent, Typography } from "@mui/material";
 import HotelDetails from "./components/HotelDetails";
 import FilterAndSorts from "./components/FiltersAndSort";
 
@@ -150,6 +150,15 @@ function App() {
               <HotelDetails key={hotel.id} hotel={hotel} />
             )
           })}
+          {!filteredHotels.length > 0 &&
+               <Card sx={{ display: 'flex', marginBottom: 2, flexDirection: 'column', backgroundColor: 'rgba(255, 255, 255, 0.97)' }}>
+                <CardContent sx={{ flex: '1 0 auto' }}>
+                      <Typography component="div" variant="h5">
+                         Please Reset your filters
+                      </Typography>
+                  </CardContent>
+                </Card>
+          }
         </Grid>
       </Grid>
     </Box>
