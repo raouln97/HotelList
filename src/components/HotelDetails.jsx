@@ -56,7 +56,7 @@ const HotelDetails = ({ hotel }) => {
           <Grid item xs={3} justifyContent='flex-end' display='flex'> 
             <Typography
               variant="h6"
-              sx={{ color: 'green', fontSize: '1.5rem' }} // Adjust the color and font size here
+              sx={{ color: 'green', fontSize: '1.5rem' }} 
             >
               SGD ${hotel.price}
             </Typography>

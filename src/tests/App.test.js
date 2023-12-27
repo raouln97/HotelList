@@ -85,8 +85,6 @@ test('filters hotels by review', async () => {
 
     const minTextbox = await screen.findByRole('textbox', { name: 'MIN' });
     const maxTextbox = await screen.findByRole('textbox', { name: 'MAX' });
-
-    // Type into the textbox
     await userEvent.type(minTextbox, '95');
     await userEvent.type(maxTextbox, '100');
 

@@ -60,11 +60,4 @@ describe('FilterAndSorts', () => {
     expect(mockOnNameChange).toHaveBeenCalledWith('Test Name');
   });
 
-//   test('calls SetStarRatingFilter when new checkbox selected', () => {
-//     render(<FilterAndSorts {...props} />);
-//     const starRatingCheckboxes = screen.getAllByTestId('star_rating');
-//     fireEvent.click(starRatingCheckboxes[2]);
-//     expect(mockSetStarRatingFilter).toHaveBeenCalledWith(expect.arrayContaining([3]));
-//   });
-
 });

@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Typography, Box,Card, CardContent, Grid } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
-// import { getCountryFlag } from '../services/getCountryFlag';
 
 const Reviews = ({ reviews }) => {
 
