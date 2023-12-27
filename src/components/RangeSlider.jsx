@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import { Box, Slider, TextField, InputAdornment } from '@mui/material';
 
-const RangeSlider = ({onPriceFilterChange, options}) => {
+const RangeSlider = ({onPriceFilterChange, options, priceFilterLimit}) => {
   const [value, setValue] = useState(options);
+
 
   useEffect(()=>{
     setValue(options);
@@ -30,7 +31,7 @@ const RangeSlider = ({onPriceFilterChange, options}) => {
         onChange={handleChange}
         valueLabelDisplay="auto"
         min={0}
-        max={options[1]}
+        max={priceFilterLimit[1]}
         sx={{ 
           marginTop: 2, 
           color: 'purple'

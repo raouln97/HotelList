@@ -4,7 +4,7 @@ import HotelFilter from "./FormFilter";
 import DropDownComponent from "./DropDownComponent";
 import StarRatingFilter from "./StarRatingFilter";
 
-const FilterAndSorts = ({onNameChange, nameFilterValue,starRatingFilter,setStarRatingFilter, onPriceFilterChange, pricingOptions, onSortChange, sortOption, onRatingChange, guestRatingValue, resetFilters}) => {
+const FilterAndSorts = ({onNameChange, nameFilterValue,starRatingFilter,setStarRatingFilter, onPriceFilterChange, pricingOptions, priceFilterLimit, onSortChange, sortOption, onRatingChange, guestRatingValue, resetFilters}) => {
 
     const sortByOptions = ['Price (lowest first)','Price (highest first)', 'Property rating (high to low)', 'Property rating (low to high)']
     const userRatingOptions = ['9+', '8+', '7+', '6+']
@@ -73,7 +73,7 @@ const FilterAndSorts = ({onNameChange, nameFilterValue,starRatingFilter,setStarR
                     <Typography component="div" variant="subtitle1">
                         Filter By Hotel Pricing:
                     </Typography>
-                    {pricingOptions.length > 0 && <RangeSlider onPriceFilterChange={onPriceFilterChange} options={pricingOptions}/>}
+                    {pricingOptions.length > 0 && <RangeSlider onPriceFilterChange={onPriceFilterChange} options={pricingOptions} priceFilterLimit={priceFilterLimit}/>}
                     {!pricingOptions.length && <CircularProgress />}
                 </Grid>
                 <Grid borderBottom='2px solid lightgrey' padding='15px'>

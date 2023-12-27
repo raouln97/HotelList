@@ -8,13 +8,14 @@ function App() {
   const [filteredHotels, setFilteredHotels] = useState([])
   const [nameFilter, setNameFilter] = useState('');
   const [starRatingFilter, setStarRatingFilter] = useState([]);
-  const [priceFilter, setPriceFilter] = useState([0, 100000]);
+  const [priceFilter, setPriceFilter] = useState([]);
   const [priceFilterLimit, setPriceFilterLimit] = useState([]);
   const [reviewRatingFilter, setReviewRatingFilter] = useState('Any');
   const [sortOrder, setSortOrder] = useState('');
 
   const getPricingLimit= (hotels) =>{
    const pricing =  hotels.map((hotel)=>(hotel.price))
+   setPriceFilter([Math.min(...pricing), Math.max(...pricing)])
    setPriceFilterLimit([Math.min(...pricing), Math.max(...pricing)])
   }
   const fetchHotelList = async () =>{
@@ -29,7 +30,7 @@ function App() {
     onRatingChange('Any')
     onNameChange('')
     onStarRatingChange([])
-    onPriceFilterChange([0,100000])
+    getPricingLimit(hotels)
   }
 
   const onSortChange = (newValue) => {
@@ -126,7 +127,8 @@ function App() {
     setStarRatingFilter: setStarRatingFilter,
     starRatingFilter: starRatingFilter,
     onPriceFilterChange: onPriceFilterChange,
-    pricingOptions: priceFilterLimit,
+    pricingOptions: priceFilter,
+    priceFilterLimit: priceFilterLimit,
     onSortChange: onSortChange,
     sortOption: sortOrder,
     onRatingChange: onRatingChange,
