@@ -56,4 +56,6 @@ describe('DropDownComponent', () => {
 
     expect(mockHandleEventChange).toHaveBeenCalledWith("testFilter", options[1]);
   });
+
+  
 });

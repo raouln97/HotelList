@@ -15,13 +15,27 @@ const RangeSlider = ({ handleFilterChange, options, priceFilterLimit }) => {
   };
 
   const handleMinChange = event => {
-    const newValue = [Math.min(event.target.value, value[1]), value[1]];
-    setValue(newValue);
+    const inputValue = event.target.value;
+    setValue([inputValue, value[1]]);
   };
+  
+  const handleMinBlur = () => {
+    let minVal = Number(value[0]);
+    if (isNaN(minVal) || minVal < priceFilterLimit[0]) {
+      minVal = priceFilterLimit[0];
+    }
+    const newValue = [minVal, value[1]];
+    setValue(newValue);
+    handleFilterChange(FilterNames.priceFilter, newValue);
+  };
+  
 
   const handleMaxChange = event => {
-    const newValue = [value[0], Math.max(event.target.value, value[0])];
+    const minVal = value[0];
+    const maxVal = Math.min(Number(event.target.value), priceFilterLimit[1]);
+    const newValue = [minVal, maxVal];
     setValue(newValue);
+    handleFilterChange(FilterNames.priceFilter, newValue);
   };
 
   return (
@@ -42,6 +56,7 @@ const RangeSlider = ({ handleFilterChange, options, priceFilterLimit }) => {
           label="MIN"
           value={value[0]}
           onChange={handleMinChange}
+          onBlur={handleMinBlur}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">SGD</InputAdornment>

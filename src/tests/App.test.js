@@ -2,8 +2,9 @@ import React from 'react';
 import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
-import App from '../App';
+import Home from '../pages/Home';
 
+describe('Home Page Test', () => {
 const mockHotels = [
   {
     id: 1,
@@ -63,8 +64,15 @@ afterEach(() => {
   jest.restoreAllMocks();
 });
 
+test('renders without crashing and displays initial hotel list', async () => {
+  render(<Home />);
+  await waitFor(() => {
+    expect(screen.getByText('Hotel A')).toBeInTheDocument();
+  });
+});
+
 test('filters hotels by name', async () => {
-  render(<App />);
+  render(<Home />);
   fireEvent.change(screen.getByLabelText('Filter by Name'), {
     target: { value: 'Hotel A' },
   });
@@ -74,7 +82,7 @@ test('filters hotels by name', async () => {
 });
 
 test('filters hotels by user review', async () => {
-  render(<App />);
+  render(<Home />);
   const dropdowns = screen.getAllByRole('combobox', { name: /Sort By/i });
   await userEvent.click(dropdowns[1]);
   const option = await screen.findByRole('option', { name: '9+' });
@@ -82,17 +90,63 @@ test('filters hotels by user review', async () => {
   await waitFor(() => {
     expect(screen.getByText('Hotel B')).toBeInTheDocument();
   });
+  expect(screen.queryByText('Hotel A')).not.toBeInTheDocument();
+
 });
 
-test('filters hotels by review', async () => {
-  render(<App />);
-
-  const minTextbox = await screen.findByRole('textbox', { name: 'MIN' });
-  const maxTextbox = await screen.findByRole('textbox', { name: 'MAX' });
-  await userEvent.type(minTextbox, '95');
-  await userEvent.type(maxTextbox, '100');
+test('filters hotels by Price', async () => {
+  render(<Home />);
 
   await waitFor(() => {
-    expect(screen.getByRole('textbox', { name: 'MIN' })).toBeInTheDocument();
+    expect(screen.getByText('Hotel A')).toBeInTheDocument();
   });
+
+  const maxTextbox = await screen.findByRole('textbox', { name: 'MAX' });
+  await userEvent.clear(maxTextbox); 
+  await userEvent.type(maxTextbox, '100');
+
+
+  expect(screen.getByText('Hotel A')).toBeInTheDocument();
+  expect(screen.queryByText('Hotel B')).not.toBeInTheDocument();
+});
+
+test('sorts hotels by price (lowest first)', async () => {
+  render(<Home />);
+
+  const dropdowns = screen.getAllByRole('combobox', { name: /Sort By/i });
+  await userEvent.click(dropdowns[0]);
+
+  const option = await screen.findByRole('option', {
+    name: 'Price (lowest first)',
+  });
+  await userEvent.click(option);
+
+  await waitFor(() => {
+    const hotelNameElements = screen.getAllByTestId('hotel_name');
+    const firstHotelName = hotelNameElements[0].textContent;
+    expect(firstHotelName).toEqual('Hotel A');
+  });
+});
+
+
+test('handles no results found', async () => {
+  render(<Home />);
+  await userEvent.type(screen.getByLabelText('Filter by Name'), 'Nonexistent Hotel');
+  await waitFor(() => {
+    expect(screen.getByText('Please Reset your filters')).toBeInTheDocument();
+  });
+});
+
+test('resets filters correctly', async () => {
+  render(<Home />);
+  const maxTextbox = await screen.findByRole('textbox', { name: 'MAX' });
+  await userEvent.clear(maxTextbox);
+  await userEvent.type(maxTextbox, '100');
+  expect(screen.getByText('Hotel A')).toBeInTheDocument();
+  expect(screen.queryByText('Hotel B')).not.toBeInTheDocument();
+  userEvent.click(screen.getByText('Clear'));
+  await waitFor(() => {
+    expect(screen.getByText('Hotel B')).toBeInTheDocument();
+  });
+});
 });
