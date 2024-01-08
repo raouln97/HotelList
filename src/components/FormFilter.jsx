@@ -1,10 +1,10 @@
 import React from 'react';
 import { TextField, Box } from '@mui/material';
+import { FilterNames } from '../types/filterName.dto';
 
-function HotelFilter({onNameChange, nameFilterValue}) {
-
-  const handleSearchChange = (event) => {
-      onNameChange(event.target.value)
+function HotelFilter({ handleFilterChange, nameFilterValue }) {
+  const handleSearchChange = event => {
+    handleFilterChange(FilterNames.nameFilter,event.target.value);
   };
 
   return (
@@ -15,7 +15,7 @@ function HotelFilter({onNameChange, nameFilterValue}) {
         variant="outlined"
         value={nameFilterValue}
         onChange={handleSearchChange}
-        sx={{ margin: '8px 0', backgroundColor: 'white'}} 
+        sx={{ margin: '8px 0', backgroundColor: 'white' }}
       />
     </Box>
   );

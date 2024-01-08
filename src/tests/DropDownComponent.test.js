@@ -11,28 +11,30 @@ describe('DropDownComponent', () => {
 
   test('renders with correct label', () => {
     render(
-        <DropDownComponent
-          optionValue={options[0]}
-          handleEventChange={mockHandleEventChange}
-          options={options}
-          label={label}
-        />
-      );
+      <DropDownComponent
+        optionValue={options[0]}
+        handleEventChange={mockHandleEventChange}
+        options={options}
+        label={label}
+        filterName='testFilter'
+      />
+    );
     expect(screen.getByLabelText(label)).toBeInTheDocument();
   });
 
   test('selects the correct initial value', async () => {
     render(
-        <DropDownComponent
-          optionValue={options[0]}
-          handleEventChange={mockHandleEventChange}
-          options={options}
-          label={label}
-        />
-      );
-      userEvent.click(screen.getByLabelText(label));
-      const dropDownBox = screen.getByRole('combobox', { name: label });
-      expect(dropDownBox).toHaveTextContent(options[0]);
+      <DropDownComponent
+        optionValue={options[0]}
+        handleEventChange={mockHandleEventChange}
+        options={options}
+        label={label}
+        filterName='testFilter'
+      />
+    );
+    userEvent.click(screen.getByLabelText(label));
+    const dropDownBox = screen.getByRole('combobox', { name: label });
+    expect(dropDownBox).toHaveTextContent(options[0]);
   });
 
   test('calls handleEventChange on option select', async () => {
@@ -42,15 +44,16 @@ describe('DropDownComponent', () => {
         handleEventChange={mockHandleEventChange}
         options={options}
         label={label}
+        filterName='testFilter'
       />
     );
-  
+
     const selectElement = screen.getByLabelText(label);
     await userEvent.click(selectElement);
-  
+
     const optionToSelect = await screen.findByText(options[1]);
     await userEvent.click(optionToSelect);
-  
-    expect(mockHandleEventChange).toHaveBeenCalledWith(options[1]);
+
+    expect(mockHandleEventChange).toHaveBeenCalledWith("testFilter", options[1]);
   });
 });

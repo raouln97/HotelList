@@ -1,27 +1,39 @@
 import React from 'react';
-import { Checkbox, FormControlLabel, FormGroup, Rating, Grid } from '@mui/material';
+import { useState } from 'react';
+import {
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
+  Rating,
+  Grid,
+} from '@mui/material';
+import { FilterNames } from '../types/filterName.dto';
 
-function StarRatingFilter({checkBoxOptions, starRatingFilter, setStarRatingFilter }) {
-
-
-  const handleCheckboxChange = (event) => {
+function StarRatingFilter({
+  checkBoxOptions,
+  starRatingFilter,
+  handleFilterChange,
+}) {
+  const handleCheckboxChange = event => {
     const { value, checked } = event.target;
-    let newVal
-
-    setStarRatingFilter(prev => {
-      if (checked & !starRatingFilter.includes(value)) {
-         newVal = [...prev, value];
+    let newVal =[]
+      if (checked && !starRatingFilter.includes(value)) {
+        newVal.push(...starRatingFilter, value)
       } else {
-        newVal =  prev.filter(option => option !== value);
+        newVal = starRatingFilter.filter(option => option !== value);
       }
-      return newVal
-    });
+    handleFilterChange(FilterNames.starRatingFilter, newVal)
   };
 
   return (
     <FormGroup>
       {checkBoxOptions.map((option, index) => (
-        <Grid flexDirection='row' display='flex' alignItems='center' key={index}>
+        <Grid
+          flexDirection="row"
+          display="flex"
+          alignItems="center"
+          key={index}
+        >
           <FormControlLabel
             key={index}
             control={
@@ -33,7 +45,7 @@ function StarRatingFilter({checkBoxOptions, starRatingFilter, setStarRatingFilte
               />
             }
           />
-            <Rating name="read-only" value={option} readOnly/>
+          <Rating name="read-only" value={option} readOnly />
         </Grid>
       ))}
     </FormGroup>

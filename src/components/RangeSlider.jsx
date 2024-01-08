@@ -1,27 +1,27 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Slider, TextField, InputAdornment } from '@mui/material';
+import { FilterNames } from '../types/filterName.dto';
 
-const RangeSlider = ({onPriceFilterChange, options, priceFilterLimit}) => {
+const RangeSlider = ({ handleFilterChange, options, priceFilterLimit }) => {
   const [value, setValue] = useState(options);
 
-
-  useEffect(()=>{
+  useEffect(() => {
     setValue(options);
-  }, [options])
+  }, [options]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
-    onPriceFilterChange(newValue);
+    handleFilterChange(FilterNames.priceFilter,newValue);
   };
 
-  const handleMinChange = (event) => {
-    const newValue = [Math.min(event.target.value, value[1]), value[1]]
-    setValue(newValue)
+  const handleMinChange = event => {
+    const newValue = [Math.min(event.target.value, value[1]), value[1]];
+    setValue(newValue);
   };
 
-  const handleMaxChange = (event) => {
-    const newValue = [value[0], Math.max(event.target.value, value[0])]
-    setValue(newValue)
+  const handleMaxChange = event => {
+    const newValue = [value[0], Math.max(event.target.value, value[0])];
+    setValue(newValue);
   };
 
   return (
@@ -32,9 +32,9 @@ const RangeSlider = ({onPriceFilterChange, options, priceFilterLimit}) => {
         valueLabelDisplay="auto"
         min={priceFilterLimit[0]}
         max={priceFilterLimit[1]}
-        sx={{ 
-          marginTop: 2, 
-          color: 'purple'
+        sx={{
+          marginTop: 2,
+          color: 'purple',
         }}
       />
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -43,7 +43,9 @@ const RangeSlider = ({onPriceFilterChange, options, priceFilterLimit}) => {
           value={value[0]}
           onChange={handleMinChange}
           InputProps={{
-            startAdornment: <InputAdornment position="start">SGD</InputAdornment>,
+            startAdornment: (
+              <InputAdornment position="start">SGD</InputAdornment>
+            ),
           }}
           sx={{ width: '100px' }}
         />
@@ -52,7 +54,9 @@ const RangeSlider = ({onPriceFilterChange, options, priceFilterLimit}) => {
           value={value[1]}
           onChange={handleMaxChange}
           InputProps={{
-            startAdornment: <InputAdornment position="start">SGD</InputAdornment>,
+            startAdornment: (
+              <InputAdornment position="start">SGD</InputAdornment>
+            ),
           }}
           sx={{ width: '100px' }}
         />
