@@ -101,17 +101,6 @@ const Home = () =>{
   
 
   const props = {
-    // nameFilterValue: nameFilter,
-    // onNameChange: onNameChange,
-    // setStarRatingFilter: setStarRatingFilter,
-    // starRatingFilter: starRatingFilter,
-    // onPriceFilterChange: onPriceFilterChange,
-    // pricingOptions: priceFilter,
-    // priceFilterLimit: priceFilterLimit,
-    // onSortChange: onSortChange,
-    // sortOption: sortOrder,
-    // onRatingChange: onRatingChange,
-    // guestRatingValue: reviewRatingFilter,
     resetFilters: resetFilters,
     filterValues: filters,
     handleFilterChange: handleFilterChange,

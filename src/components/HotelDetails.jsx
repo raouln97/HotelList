@@ -21,7 +21,7 @@ import Reviews from './Reviews';
 
 const HotelDetails = ({ hotel }) => {
   const [reviewsOpen, setReviewsOpen] = useState(false);
-  const [reviewsSearchValue, setReviewsSearchValue] = useState();
+  const [reviewsSearchValue, setReviewsSearchValue] = useState('');
   const [filteredReviews, setFilteredReviews] = useState(hotel.reviews);
 
   const handleReviewsSearch = event => {
@@ -116,6 +116,7 @@ const HotelDetails = ({ hotel }) => {
         <Badge
           sx={{ cursor: 'pointer' }}
           onClick={handleReviewsToggle}
+          data-testid="badge-reviews"
           badgeContent={hotel.rating}
           color={
             reviewsOpen && hotel.reviews.length > 0 ? 'primary' : 'secondary'
